@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ОПОРА — Опора там, где ты живёшь</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #0A1F44;
+            --bg-block: #122B54;
+            --bg-card: #1A3560;
+            --text-main: #CCCCCC;
+            --text-head: #FFFFFF;
+            --accent: #D4AF37;
+            --accent-hover: #FFD700;
+            --border: #B0B0B0;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== ШАПКА ===== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 31, 68, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--text-head);
+            letter-spacing: 3px;
+        }
+
+        .logo-col {
+            width: 8px;
+            height: 28px;
+            background: linear-gradient(to bottom, var(--accent), #B8962E);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .logo-col::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -3px;
+            width: 14px;
+            height: 5px;
+            background: var(--accent);
+            border-radius: 1px;
+        }
+
+        .logo-col::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: -3px;
+            width: 14px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .btn-nav {
+            background: var(--accent);
+            color: var(--bg-main) !important;
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-nav:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ГЛАВНЫЙ ЭКРАН ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            position: relative;
+            background: radial-gradient(ellipse at center, #122B54 0%, #0A1F44 70%);
+        }
+
+        .hero-column {
+            width: 60px;
+            height: 220px;
+            background: linear-gradient(to right, #B0B0B0, #FFFFFF, #B0B0B0);
+            border-radius: 4px;
+            position: relative;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .hero-column::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -12px;
+            width: 84px;
+            height: 20px;
+            background: linear-gradient(to bottom, #FFD700, #D4AF37, #B8962E);
+            border-radius: 3px;
+        }
+
+        .hero-column::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: -8px;
+            width: 76px;
+            height: 14px;
+            background: linear-gradient(to bottom, #FFFFFF, #B0B0B0);
+            border-radius: 3px;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 10vw, 96px);
+            letter-spacing: 12px;
+            color: var(--text-head);
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .hero .slogan {
+            font-size: clamp(16px, 2.5vw, 22px);
+            color: var(--accent);
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .btn-main {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg-main);
+            padding: 16px 48px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-main:hover {
+            background: transparent;
+            color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ===== СЕКЦИИ ===== */
+        section {
+            padding: 100px 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 42px);
+            color: var(--text-head);
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-main);
+            font-size: 18px;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== О НАС ===== */
+        .about {
+            background: var(--bg-block);
+        }
+
+        .about-text {
+            font-size: 20px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            line-height: 1.8;
+        }
+
+        .about-text strong {
+            color: var(--accent);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background: var(--bg-card);
+            padding: 40px 25px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .value-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .value-card h3 {
+            color: var(--text-head);
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .value-card p {
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        /* ===== ПРОГРАММА ===== */
+        .program {
+            background: var(--bg-main);
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .program-card {
+            background: var(--bg-card);
+            padding: 35px 30px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s;
+        }
+
+        .program-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .program-card h3 {
+            color: var(--text-head);
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .program-card p {
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        /* ===== СИМВОЛИКА ===== */
+        .symbols {
+            background: var(--bg-block);
+        }
+
+        .symbols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .symbol-block {
+            padding: 30px;
+        }
+
+        .shield {
+            width: 140px;
+            height: 160px;
+            margin: 0 auto 25px;
+            background: var(--bg-main);
+            border: 4px solid var(--accent);
+            border-radius: 0 0 50% 50% / 0 0 40% 40%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shield-column {
+            width: 30px;
+            height: 90px;
+            background: linear-gradient(to right, #B0B0B0, #FFFFFF, #B0B0B0);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .shield-column::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -6px;
+            width: 42px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .flag-preview {
+            width: 200px;
+            height: 130px;
+            margin: 0 auto 25px;
+            background: var(--bg-main);
+            border: 2px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flag-column {
+            width: 25px;
+            height: 80px;
+            background: linear-gradient(to right, #B0B0B0, #FFFFFF, #B0B0B0);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .flag-column::before {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: -5px;
+            width: 35px;
+            height: 9px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .motto {
+            font-size: 22px;
+            color: var(--accent);
+            font-style: italic;
+            letter-spacing: 2px;
+            margin-top: 80px;
+        }
+
+        .symbol-block h3 {
+            color: var(--text-head);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .symbol-block p {
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        /* ===== ПРИСОЕДИНИТЬСЯ ===== */
+        .join {
+            background: var(--bg-main);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--bg-main);
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            color: var(--text-head);
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            font-size: 14px;
+        }
+
+        .join-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .join-form input {
+            padding: 16px 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: var(--bg-card);
+            color: var(--text-head);
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .join-form input:focus {
+            border-color: var(--accent);
+        }
+
+        .join-form input::placeholder {
+            color: #888;
+        }
+
+        .join-form button {
+            padding: 16px;
+            background: var(--accent);
+            color: var(--bg-main);
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .join-form button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ПОДВАЛ ===== */
+        footer {
+            background: #061530;
+            padding: 50px 40px 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--text-head);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-main);
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            section {
+                padding: 70px 20px;
+            }
+
+            .hero h1 {
+                letter-spacing: 6px;
+            }
+
+            .motto {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ШАПКА -->
+    <header>
+        <div class="logo">
+            <div class="logo-col"></div>
+            ОПОРА
+        </div>
+        <nav>
+            <a href="#about">О нас</a>
+            <a href="#program">Программа</a>
+            <a href="#symbols">Символика</a>
+            <a href="#join" class="btn-nav">Вступить</a>
+        </nav>
+    </header>
+
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <section class="hero">
+        <div class="hero-column"></div>
+        <h1>ОПОРА</h1>
+        <p class="slogan">Опора — там, где ты живёшь</p>
+        <a href="#about" class="btn-main">Узнать больше</a>
+    </section>
+
+    <!-- О НАС -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">Кто мы</h2>
+            <p class="about-text">
+                Мы — не партия власти. Мы — не оппозиция. Мы — <strong>основа</strong>.<br><br>
+                «Опора» — это социал-демократия с прагматичным уклоном. Мы не левые и не правые. Мы — <strong>Третий путь</strong>. Мы за баланс между свободой рынка и социальной справедливостью. Мы начинаем <strong>снизу</strong>. Со своей земли. Со своего города. Со своего двора.
+            </p>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">⚖️</div>
+                    <h3>Справедливость</h3>
+                    <p>Без уравниловки. Каждый получает по заслугам, но никто не брошен.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🗽</div>
+                    <h3>Свобода</h3>
+                    <p>Слова, интернета, действий. Но с ответственностью перед обществом.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🏛️</div>
+                    <h3>Регионы</h3>
+                    <p>Не Москва решает. Люди на местах знают, что им нужно.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Прагматизм</h3>
+                    <p>Не догмы. Не идеологии. Только то, что работает.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПРОГРАММА -->
+    <section class="program" id="program">
+        <div class="container">
+            <h2 class="section-title">Что мы предлагаем</h2>
+            <p class="section-subtitle">Конкретные шаги, а не пустые обещания</p>
+            <div class="program-grid">
+                <div class="program-card">
+                    <h3>💰 Прогрессивный налог</h3>
+                    <p>Богатые платят больше. Средний класс — меньше. Бедные — почти ничего.</p>
+                </div>
+                <div class="program-card">
+                    <h3>🏥 Доступная медицина</h3>
+                    <p>Бесплатная база для всех. Качественная — по цене, а не по блату.</p>
+                </div>
+                <div class="program-card">
+                    <h3>🎓 Бесплатное образование</h3>
+                    <p>Первое высшее — бесплатно. Отмена ЕГЭ как единственного критерия.</p>
+                </div>
+                <div class="program-card">
+                    <h3>🌐 Свободный интернет</h3>
+                    <p>Без необоснованных блокировок. Без слежки. Без запретов «на всякий случай».</p>
+                </div>
+                <div class="program-card">
+                    <h3>🏪 Поддержка бизнеса</h3>
+                    <p>Равные правила для всех. Чтобы выживали не только корпорации.</p>
+                </div>
+                <div class="program-card">
+                    <h3>🏗️ Развитие регионов</h3>
+                    <p>Инвестиции в инфраструктуру, а не только дотации. Рабочие места на местах.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СИМВОЛИКА -->
+    <section class="symbols" id="symbols">
+        <div class="container">
+            <h2 class="section-title">Наши символы</h2>
+            <p class="section-subtitle">То, что нас объединяет</p>
+            <div class="symbols-grid">
+                <div class="symbol-block">
+                    <div class="shield">
+                        <div class="shield-column"></div>
+                    </div>
+                    <h3>Герб</h3>
+                    <p>Щит с колонной. Опора. Основа. Защита.</p>
+                </div>
+                <div class="symbol-block">
+                    <div class="flag-preview">
+                        <div class="flag-column"></div>
+                    </div>
+                    <h3>Флаг</h3>
+                    <p>Синий с колонной. Стабильность. Доверие.</p>
+                </div>
+                <div class="symbol-block">
+                    <div class="motto">«Опора — там, где ты живёшь»</div>
+                    <h3>Девиз</h3>
+                    <p>Наш главный принцип</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПРИСОЕДИНИТЬСЯ -->
+    <section class="join" id="join">
+        <div class="container">
+            <h2 class="section-title">Стань частью опоры</h2>
+            <p class="section-subtitle">Три шага, чтобы начать</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Оставь заявку</h3>
+                    <p>Заполни форму ниже</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Приди на встречу</h3>
+                    <p>Познакомься с людьми</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Начни действовать</h3>
+                    <p>Делай, а не говори</p>
+                </div>
+            </div>
+            <form class="join-form" onsubmit="event.preventDefault(); alert('Заявка отправлена! Спасибо, что ты с нами.');">
+                <input type="text" placeholder="Имя" required>
+                <input type="email" placeholder="Email" required>
+                <input type="text" placeholder="Город" required>
+                <input type="tel" placeholder="Телефон">
+                <button type="submit">Отправить заявку</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ПОДВАЛ -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>ОПОРА</h4>
+                <p style="font-size: 14px; color: #888;">Опора — там, где ты живёшь</p>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="#about">О нас</a>
+                <a href="#program">Программа</a>
+                <a href="#symbols">Символика</a>
+                <a href="#join">Присоединиться</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <a href="mailto:info@opora.ru">info@opora.ru</a>
+                <a href="#">Telegram</a>
+                <a href="#">VK</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 ОПОРА. Все права защищены.
+        </div>
+    </footer>
+
+</body>
+</html>
